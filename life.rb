@@ -1,3 +1,4 @@
+#uses pretty printer module
 require 'pp'
 #row: number of rows, default is 5
 #cols: number of coloums, default is 5
@@ -57,11 +58,11 @@ end
 def update_board(board, rows, cols)
   #puts "rows: #{rows} cols: #{cols}"
   new_board = create_board(rows, cols, -1)
-  pp new_board
+  #pp new_board
   for i in 0..rows-1
     for j in 0..cols-1
       num_of_neighbors = get_number_of_neighbors(board, i, j, rows, cols)
-      puts "i: #{i} j: #{j} state: #{board[i][j]} num_neighbors: #{num_of_neighbors}"
+      #puts "i: #{i} j: #{j} state: #{board[i][j]} num_neighbors: #{num_of_neighbors}"
       if board[i][j] == 1
         case num_of_neighbors
         when 0..1
@@ -87,6 +88,7 @@ def update_board(board, rows, cols)
   end
   return new_board
 end
+
 #x is row  num, y is col num
 # c1 | c2 | c3
 # ------------
@@ -104,6 +106,9 @@ def get_number_of_neighbors(board, row_num, col_num, rows, cols)
   #puts "failed after 4"
   c5 = board[row_num][col_num+1]
   #puts "failed after 5"
+  #This conditional takes care of ignoring getting data if the cell is in the bottom row, this is not needed for other places where
+  #indicies return null because the null opperator is in the nested array. If this is igonored an error will be returned for trying to use 
+  #the [] opperator on a nil object
   unless row_num == rows-1
     c6 = board[row_num+1][col_num-1]
     #puts "failed after 6"
@@ -113,6 +118,7 @@ def get_number_of_neighbors(board, row_num, col_num, rows, cols)
     #puts "failed after 8"
     #handle edge cases
   end
+  #takes care of cell in top row corrner case
   if row_num == 0
     c1 = 0
     c2 = 0
@@ -139,4 +145,4 @@ def get_number_of_neighbors(board, row_num, col_num, rows, cols)
   return c1+c2+c3+c4+c5+c6+c7+c8
 end
 #run starts here
-life(5,5,1,25)
+life(5,5,5,25)
