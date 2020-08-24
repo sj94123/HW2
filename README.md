@@ -16,3 +16,18 @@ Execution Plan -
 
 https://docs.google.com/document/d/1HjHplaU41RIkUdKCbL0hb_3rB3SjF8WRhN86uzsPNHc/edit
 
+How to Run the Codes - 
+
+For Ruby and Go code - 
+1. Click on the DOI of repl.it in the readme
+2. Now click on the .replit file in the files explorer and paste -
+  (i) for Go - 
+      language = "go"
+      run = "go run code/gol.go"
+   (ii) for Ruby -
+      language = "ruby"
+      run = "ruby life.rb"
+      
+For SQL -
+
+
