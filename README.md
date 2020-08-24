@@ -24,7 +24,8 @@ For Ruby and Go code -
   (i) for Go - 
       language = "go"
       run = "go run code/gol.go"
-   (ii) for Ruby -
+   
+  (ii) for Ruby -
       language = "ruby"
       run = "ruby life.rb"
       
