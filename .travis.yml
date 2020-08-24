@@ -1,0 +1,11 @@
+language: go
+go:
+  - 1.12
+  - 1.13
+language: ruby
+ruby:
+  - 2.7.1
+language: sql
+sql:
+  - 15.0. 2000.5
+  
