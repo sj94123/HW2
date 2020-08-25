@@ -1,98 +1,93 @@
 package main
 
 import (
-	"bytes"
-	"fmt"
-	"math/rand"
-	"time"
+    "fmt"
 )
 
-type Field struct {
-	s    [][]bool
-	w, h int
-}
 
-func NewField(w, h int) Field {
-	s := make([][]bool, h)
-	for i := range s {
-		s[i] = make([]bool, w)
-	}
-	return Field{s: s, w: w, h: h}
-}
 
-func (f Field) Set(x, y int, b bool) {
-	f.s[y][x] = b
-}
+/* computing next generation
+   input: current (previous) state
+*/
+func compute_next_generation(arr [10][10]int) {
 
-func (f Field) Next(x, y int) bool {
-	on := 0
-	for i := -1; i <= 1; i++ {
-		for j := -1; j <= 1; j++ {
-			if f.State(x+i, y+j) && !(j == 0 && i == 0) {
-				on++
-			}
+   var i, j, k, l int 		/*iterator variables*/
+   var aliveN int; 		/*contains alive neighbour count*/
+   var twoD [10][10]int 	/* new generation placeholder matrix*/
+
+   for i=1;i<9;i++ {
+       for j=1;j<9;j++ {
+
+        /*sum of 8 neighbours for given cell*/
+ 	aliveN = 0;
+	for k=-1; k<=1; k++ {
+		for l=-1;l<=1;l++ {
+		aliveN += arr[i+k][j+l];
 		}
 	}
-	return on == 3 || on == 2 && f.State(x, y)
-}
+	aliveN -= arr[i][j];
 
-func (f Field) State(x, y int) bool {
-	for y < 0 {
-		y += f.h
+	/*check for the right condition and do the needful rules by GOL*/
+	if ((arr[i][j] == 1) && (aliveN<2)) {
+		twoD[i][j] = 0;
+	} else if ((arr[i][j] == 1) && (aliveN>3)) {
+		twoD[i][j] = 0;
+	} else if ((arr[i][j] == 0) && (aliveN==3)) {
+		twoD[i][j] = 1;
+	} else {
+		twoD[i][j] = arr[i][j];
 	}
-	for x < 0 {
-		x += f.w
 	}
-	return f.s[y%f.h][x%f.w]
-}
+   }
 
-type Life struct {
-	w, h int
-	a, b Field
-}
+	/*Print New Generation*/
+	fmt.Println("Printing new generation: ")
+	for y := 0; y < 10; y++ {
+		for x := 0; x < 10; x++ {
 
-func NewLife(w, h int) *Life {
-	a := NewField(w, h)
-	for i := 0; i < (w * h / 2); i++ {
-		a.Set(rand.Intn(w), rand.Intn(h), true)
-	}
-	return &Life{
-		a: a,
-		b: NewField(w, h),
-		w: w, h: h,
-	}
-}
-
-func (l *Life) Step() {
-	for y := 0; y < l.h; y++ {
-		for x := 0; x < l.w; x++ {
-			l.b.Set(x, y, l.a.Next(x, y))
+		if (twoD[y][x] == 1) {
+			fmt.Printf("*")
+		 } else {
+			fmt.Printf(".")
+		 }
 		}
+		fmt.Println("")
+	     }
 	}
-	l.a, l.b = l.b, l.a
-}
-
-func (l *Life) String() string {
-	var buf bytes.Buffer
-	for y := 0; y < l.h; y++ {
-		for x := 0; x < l.w; x++ {
-			b := byte(' ')
-			if l.a.State(x, y) {
-				b = '*'
-			}
-			buf.WriteByte(b)
-		}
-		buf.WriteByte('\n')
-	}
-	return buf.String()
-}
 
 func main() {
-	l := NewLife(80, 15)
-	for i := 0; i < 300; i++ {
-		l.Step()
-		fmt.Print("\x0c")
-		fmt.Println(l)
-		time.Sleep(time.Second / 30)
+	/* 10-by-10 matrix representing the initial condition*/
+   var a = [10][10]int{
+   	    { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 } ,
+            { 0, 0, 0, 1, 1, 0, 0, 0, 0, 0 } ,
+            { 0, 0, 0, 0, 1, 0, 0, 0, 0, 0 } ,
+            { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 } ,
+            { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 } ,
+            { 0, 0, 0, 1, 1, 0, 0, 0, 0, 0 } ,
+            { 0, 0, 1, 1, 0, 0, 0, 0, 0, 0 } ,
+            { 0, 0, 0, 0, 0, 1, 0, 0, 0, 0 } ,
+            { 0, 0, 0, 0, 1, 0, 0, 0, 0, 0 } ,
+            { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 } ,
+        }
+
+
+         /* Print the initial condition*/
+	fmt.Println("Printing Initial Condition: ")
+	for y := 0; y < 10; y++ {
+		for x := 0; x < 10; x++ {
+
+		if (a[y][x] == 1) {
+			fmt.Printf("*")
+		} else {
+			fmt.Printf("-")
+		}
+		}
+		fmt.Println("")
 	}
+
+
+	/*Compute the next generation based on current state*/
+	compute_next_generation(a)
+	
 }
+
