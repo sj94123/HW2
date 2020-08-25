@@ -36,4 +36,10 @@ For Ruby and Go code -
       
 For SQL -
 
+1. Open Online SQL Editor - https://sqliteonline.com/
+
+2. Copy contents of file code/gol.sql and paste it in PostGRESQL editor.
+
+3. Click on run.
+
 
