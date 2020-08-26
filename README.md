@@ -18,7 +18,7 @@ https://docs.google.com/document/d/1HjHplaU41RIkUdKCbL0hb_3rB3SjF8WRhN86uzsPNHc/
 
 How to Run the Codes - 
 
-For Ruby and Go code - 
+A) For Ruby and Go code 
 
 1. Click on the DOI of repl.it in the readme
 
@@ -34,6 +34,12 @@ For Ruby and Go code -
      language = "ruby"
       run = "ruby life.rb"
       
-For SQL -
+B) For SQL code
 
+Use SQLFiddle: http://sqlfiddle.com/#!17
+   
+Copy the SQL code onto the Schema Panel, build schema.
 
+You can check the output in a tabular format by querying
+
+      SELECT * FROM output order by ID;
