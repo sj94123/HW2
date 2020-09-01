@@ -26,8 +26,8 @@ A) For Ruby and Go code
   
   (i) for Go - 
       
-      language = "go"
-      run = "go run code/gol.go"
+     language = "ruby"
+     run = "go run code/buggy_gol.go"
    
   (ii) for Ruby -
      
